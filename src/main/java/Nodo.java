@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Nodo<T> {
+public class Nodo<T> implements Serializable {
     private T info; // Información del nodo
 
     // ArrayList que almacena los nodos siguientes y anteriores
@@ -9,6 +10,7 @@ public class Nodo<T> {
 
     // Grado que se toma en cuenta en el ordenamiento topológico
     private int gradoDeEntrada = 0;
+    private boolean esChar;
 
     // Constructor del nodo
     public Nodo(T info) {

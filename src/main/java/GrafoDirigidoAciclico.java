@@ -1,11 +1,13 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
-public class GrafoDirigidoAciclico<T> {
+public class GrafoDirigidoAciclico<T> implements Serializable {
     private ArrayList<Nodo<T>> nodos = new ArrayList<>();
     private int[][] matrizDeAdyacencia;
-
+    private String listaCadena;
+    private String matrizCadena;
     public GrafoDirigidoAciclico() {
         
     }
@@ -16,6 +18,18 @@ public class GrafoDirigidoAciclico<T> {
             nodos.add((Nodo<T>) nodo);
         }
     }
+
+    public GrafoDirigidoAciclico(char endChar) {
+        if (!Character.isLetter(endChar)) {
+            throw new IllegalArgumentException("El carácter ingresado debe ser una letra.");
+        }
+        endChar = Character.toUpperCase(endChar); // Convertir a mayúscula
+        for (char c = 'A'; c <= endChar; c++) {
+            Nodo<Character> nodo = new Nodo<>(c);
+            nodos.add((Nodo<T>) nodo);
+        }
+    }
+
 
     public GrafoDirigidoAciclico( boolean valoresAleatorios) {
         if (valoresAleatorios) {
@@ -35,18 +49,28 @@ public class GrafoDirigidoAciclico<T> {
         nodos.add(nodo);
     }
 
+
+
     public String getStringMatrizDeAdyacencia () {
         StringBuilder builder = new StringBuilder();
-        int[][] matriz = getMatrizDeAdyacencia();
-        for (int[] fila : matriz) {
+        matrizDeAdyacencia = getMatrizDeAdyacencia();
+        for (int[] fila : matrizDeAdyacencia) {
             for (int valor : fila) {
                 builder.append(valor).append(" ");
             }
             builder.append("\n");
         }
+        matrizCadena = builder.toString();
         return builder.toString();
     }
 
+    public String listaString() {
+        return listaCadena;
+    }
+
+    public String matrizString() {
+        return matrizCadena;
+    }
     public String getListaDeAdyacencia() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < nodos.size(); i++) {
@@ -62,6 +86,7 @@ public class GrafoDirigidoAciclico<T> {
                 builder.append("\n");
             }
         }
+        listaCadena = builder.toString();
         return builder.toString();
     }
 
@@ -301,5 +326,11 @@ public class GrafoDirigidoAciclico<T> {
             }
         }
         stack.push(nodo);
+    }
+
+    public String toString () {
+        return (
+                "Grafo de tamaño: "+ getNodos().size()
+                );
     }
 }
